@@ -45,13 +45,14 @@
     "fs": "^0.0.1-security",
     "helmet": "^4.6.0",
     "morgan": "^1.10.0",
-    "mysql2": "^2.2.5",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "require-json5": "^1.1.0",
     "sqlite3": "^5.0.2",
     "swagger-ui-express": "^4.1.6",
     "tsconfig-paths": "^3.9.0",
     "tsoa": "^3.5.2",
-    "typeorm": "^0.2.31"
+    "typeorm": "^0.2.45"
   }
 }
