@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
 import { IMovies, createMovie, readMovie, updateMovie, deleteMovie } from './movies.service';
-import { Router } from 'express';
 
 @Tags('Movies')
 @Route('/api/movie')

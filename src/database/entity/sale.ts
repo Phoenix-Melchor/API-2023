@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColu
 import { Movies } from './movies';
 
 @Entity({ name: 'Sale' })
-export class User extends BaseEntity {
+export class Sale extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
