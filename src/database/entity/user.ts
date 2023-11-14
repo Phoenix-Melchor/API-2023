@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 
 @Entity({ name: 'user' })
 export class User extends BaseEntity {
@@ -23,7 +23,7 @@ export class User extends BaseEntity {
   @Column({ unique: false })
   active: boolean;
 
-  @ManyToOne(() => User, user => user.updatedByid)
+  @OneToMany(() => User, user => user.updatedByid)
   @JoinColumn({ name: 'update_user', referencedColumnName: 'name' })
   updatedByid: User;
 
