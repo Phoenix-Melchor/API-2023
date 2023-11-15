@@ -1,7 +1,29 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
-import { IUser, createUser, readUser, updateUser, deleteUser } from './user.service';
+import { IUser} from './user.service';
+import express from 'express'
 
-@Tags('Users')
+const router = express.Router()
+
+router.get('/get', (_req, res) => {
+  res.send('getting user')
+  //res.send(readUser())
+})
+
+router.post('/post', (_req, res) => {
+  res.send('adding user')
+})
+
+router.put('/update', (_req, res) => {
+  res.send('updating user')
+})
+
+router.delete('/remove', (_req, res) => {
+  res.send('removing user')
+})
+
+export default router
+
+/*@Tags('Users')
 @Route('/api/users')
 export class UserController extends Controller {
 
@@ -25,7 +47,7 @@ export class UserController extends Controller {
   // UPDATE CONTROLLER
   @Put('/update')
   public async updateUser(@Body() user: { id: number } & IUser) {
-    return updateUser(user, /* Provide the ID of the user updating the record */);
+    return updateUser(user, /* Provide the ID of the user updating the record );
   }
 
   // DELETE CONTROLLER
@@ -35,5 +57,5 @@ export class UserController extends Controller {
   }
 
 }
-
+*/
 

@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
 import { IMovies, createMovie, readMovie, updateMovie, deleteMovie } from './movies.service';
+import * as express from 'express';
 
 @Tags('Movies')
 @Route('/api/movie')
@@ -33,5 +34,4 @@ export class MoviesController extends Controller {
   public async deleteMovie(@Path('data_id') data_id: number) {
     return deleteMovie(data_id)
   }
-
 }
