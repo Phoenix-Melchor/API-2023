@@ -7,10 +7,10 @@ import { DataSource } from 'typeorm';
 
 export const AppDataSource = new DataSource({
     type: "mysql",
-    host: process.env.DATABASE_HOST,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE_NAME,
+    host: "localhost",
+    username: "root",
+    password: "Phoenix-Melchor14",
+    database: "jadfaa",
     port: 3306,
     entities:[Movies, Role, User, Sale],
     logging: true,
