@@ -1,4 +1,10 @@
 import { User } from '@entity/user';
+import { AppDataSource } from 'src/database/db';
+
+const userRepo = AppDataSource.getRepository(User)
+
+
+
 
 export interface IUser {
   name: string;
@@ -6,11 +12,20 @@ export interface IUser {
   password: string;
   creation_date: Date;
   update_date: Date;
-  last_seen: Date;
+  last_seen: Date; 
   gender: string;
   active: boolean;
   updatedByid: User;
 }
+
+export const readUsers = async () => {
+  try {
+    return await userRepo.find();
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error al obtener usuarios de la base de datos');
+  }
+};
 
 // CREATE SERVICE
 export const createUser = async (user: IUser/*, createdByUserId: number*/) => {
@@ -24,7 +39,6 @@ export const createUser = async (user: IUser/*, createdByUserId: number*/) => {
     newUser.last_seen = user.last_seen;
     newUser.gender = user.gender;
     newUser.active = user.active;
-    newUser.updatedByid = user.updatedByid;
 
     return await newUser.save();
   } catch (e) {
@@ -62,7 +76,6 @@ export const updateUser = async (user: { id: number } & IUser) => {
     foundUser.last_seen = user.last_seen;
     foundUser.gender = user.gender;
     foundUser.active = user.active;
-    foundUser.updatedByid = user.updatedByid;
 
     return await foundUser.save();
   } catch (e) {

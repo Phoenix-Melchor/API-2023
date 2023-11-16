@@ -29,7 +29,7 @@ export class Movies extends BaseEntity {
     @Column()
     active: boolean;
 
-    @ManyToOne(() => User, user => user.updatedByid)
+    //@ManyToOne(() => User, user => user.updatedByid)
     @JoinColumn({ name: 'update_user' })
     updatedBy: User;
 

@@ -1,6 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToMany } from "typeorm";
-
-@Entity()
+@Entity({ name: 'users' })
 export class User extends BaseEntity {
 
   @PrimaryGeneratedColumn()
@@ -17,14 +16,15 @@ export class User extends BaseEntity {
   @Column({ unique: false })
   update_date: Date;
   @Column({ unique: false })
+  update_User: number
+  @Column({ unique: false })
   last_seen: Date;
   @Column({ unique: false })
   gender: string;
   @Column({ unique: false })
   active: boolean;
 
-  @OneToMany(() => User, user => user.updatedByid)
+  /*@ManyToOne(() => User, user => user.updatedByid)
   @JoinColumn({ name: 'update_user', referencedColumnName: 'name' })
-  updatedByid: User;
-
+  updatedByid: User;*/
 }

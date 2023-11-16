@@ -1,13 +1,19 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
-import { IUser} from './user.service';
+import { IUser, readUsers} from './user.service';
 import express from 'express'
 
 const router = express.Router()
+const userrep = 
 
-router.get('/get', (_req, res) => {
-  res.send('getting user')
-  //res.send(readUser())
-})
+router.get('/get', async (_req, res) => {
+  try {
+    const users = await readUsers();
+    res.json(users);
+  } catch (error) {
+    console.error('Error al obtener usuarios:', error);
+    res.status(500).send('Error al obtener usuarios de la base de datos');
+  }
+});
 
 router.post('/post', (_req, res) => {
   res.send('adding user')
