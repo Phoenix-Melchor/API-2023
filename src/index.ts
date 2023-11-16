@@ -19,10 +19,6 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`)
 })
 
-app.get('/ping', (_req, res) => {
-  res.send('pong')
-})
-
 app.use('/api/user', userRouter)
 
 //Arreglar base de datos connection
