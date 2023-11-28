@@ -1,13 +1,14 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
-import { IUser, readUsers} from './user.service';
+import { createuser, deleteUser, readUsers, updateUser } from './user.service';
 import express from 'express'
 
 const router = express.Router()
-const userrep = 
 
-router.get('/get', async (_req, res) => {
+router.get('/:id?', async (_req, res) => {
   try {
-    const users = await readUsers();
+    let users = null
+    if (_req?.params?.id){users = await readUsers(Number(_req?.params?.id))}
+    else {users = await readUsers();}
     res.json(users);
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
@@ -15,16 +16,40 @@ router.get('/get', async (_req, res) => {
   }
 });
 
-router.post('/post', (_req, res) => {
-  res.send('adding user')
+
+router.post('/post', async (_req, res) => {
+  try{
+    const data = _req.body
+    const user = await createuser(data ,1);
+    res.json(user)
+  }
+  catch(error){
+    console.error('Error al agregar usuario', error);
+    res.status(500).send('Error al agregar usuario');
+  }
 })
 
-router.put('/update', (_req, res) => {
-  res.send('updating user')
+router.put('/update/:id', async (_req, res) => {
+  try{
+    const data = _req.body
+    const user = await updateUser(Number(_req.params.id), data)
+    res.json(user)
+  }
+  catch(error){
+    console.error('Error al actualizar usuario', error);
+    res.status(500).send('Error al actualizar usuario');
+  }
 })
 
-router.delete('/remove', (_req, res) => {
-  res.send('removing user')
+router.delete('/remove/:id', (_req, res) => {
+  try{
+    const userd = deleteUser(Number(_req.params.id))
+    res.json(userd)
+  }
+  catch(error){
+    console.error('Error al eliminar usuario', error);
+    res.status(500).send('Error al eliminar usuario')
+  }
 })
 
 export default router

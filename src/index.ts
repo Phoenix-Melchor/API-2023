@@ -3,9 +3,11 @@ import dotenv from 'dotenv';
 //import app from './app';
 import express from 'express';
 import { AppDataSource } from "./database/db";
-import { MoviesController } from "./app/movies/movies.router";
+//import { MoviesController } from "./app/movies/movies.router";
 //import { UserController } from "./app/user/user.router";
 import userRouter from './app/user/user.router'
+import moviesRouter from './app/movies/movies.router'
+import saleRouter from './app/sales/sale.router'
 
 const app = express()
 app.use(express.json())
@@ -20,6 +22,9 @@ app.listen(port, () => {
 })
 
 app.use('/api/user', userRouter)
+app.use('/api/movies', moviesRouter)
+app.use('/api/sale', saleRouter)
+
 
 //Arreglar base de datos connection
 async function StartDatabase() {

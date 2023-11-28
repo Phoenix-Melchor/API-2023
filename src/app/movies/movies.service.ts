@@ -1,4 +1,7 @@
-import {Movies} from '@entity/movies'
+import { Movies } from '@entity/movies'
+import { AppDataSource } from 'src/database/db';
+
+const moviesRepo = AppDataSource.getRepository(Movies)
 
 export interface IMovies {
     name: string,
@@ -8,77 +11,77 @@ export interface IMovies {
     studio: string,
     stock: Number,
     measure: string,
-    creation_date: Date,
-    duration: Date,
-    released_date: Date,
-    active: boolean
+    creation_date: string,
+    duration: string,
+    release_date: string,
+    active: number  
 }
   
-  // CREATE SERVICE
-export const createMovie = async (movies: IMovies) => {
-    try {
-        const _newMovies = new Movies();
-        _newMovies['name'] = movies['name'];
-        _newMovies['description'] = movies['description'];
-        _newMovies['price'] = movies['price'];
-        _newMovies['category'] = movies['category'];
-        _newMovies['studio'] = movies['studio'];
-        _newMovies['stock'] = movies['stock'];
-        _newMovies['measure'] = movies['measure'];
-        _newMovies['creation_date'] = movies['creation_date'];
-        _newMovies['duration'] = movies['duration'];
-        _newMovies['released_date'] = movies['released_date'];
-        _newMovies['active'] = movies['active'];
-        return await _newMovies.save();
-    } catch (e) {
-        console.error(e);
-    }
+// CREATE SERVICE
+export const createMovie = async (movie: IMovies) => {
+  try {
+    const newMovie = new Movies();
+    newMovie.name = movie.name;
+    newMovie.description = movie.description;
+    newMovie.price = movie.price;
+    newMovie.category = movie.category;
+    newMovie.studio = movie.studio;
+    newMovie.stock = movie.stock;
+    newMovie.measure = movie.measure;
+    newMovie.creation_date = movie.creation_date;
+    newMovie.duration = movie.duration;
+    newMovie.release_date = movie.release_date;
+    newMovie.active = movie.active;
+
+    return await newMovie.save();
+  } catch (e) {
+    console.error(e);
   }
-  
-  // READ SERVICE
-export const readMovie = async (moviesId?: number) => {
-    try {
-        if (moviesId) { 
-            return await Movies.findOne({
-            where: { id: moviesId },
-        });
-      } else {
-            return await Movies.find();
-        }
-    } catch (e) {
-        console.error(e);
-    }
-}
-  
-  // UPDATE SERVICE
-export const updateMovie = async (movie: { id: number } & IMovies) => {
-    try {
-        const _foundmovie = await Movies.findOne({ where: { id: movie['id'] } });
-        if (!_foundmovie) return { message: "Movie not found!" };
-        if (movie['name']) _foundmovie['name'] = movie['name'];
-        if (movie['description']) _foundmovie['description'] = movie['description'];
-        if (movie['price']) _foundmovie['price'] = movie['price'];
-        if (movie['category']) _foundmovie['category'] = movie['category'];
-        if (movie['studio']) _foundmovie['studio'] = movie['studio'];
-        if (movie['stock']) _foundmovie['stock'] = movie['stock'];
-        if (movie['measure']) _foundmovie['measure'] = movie['measure'];
-        if (movie['creation_date']) _foundmovie['creation_date'] = movie['creation_date'];
-        if (movie['duration']) _foundmovie['duration'] = movie['duration'];
-        if (movie['released_date']) _foundmovie['released_date'] = movie['released_date'];
-        if (movie['active']) _foundmovie['active'] = movie['active'];
-        return await _foundmovie.save();
-    } catch (e) {
-      console.error(e);
-    }
-}
-  
-  // DELETE SERVICE
-export const deleteMovie = async (moviesId: number) => {
-    try {
-        const _foundMovie = await Movies.findOne({ where: { id: moviesId } });
-        if (!_foundMovie) return { message: "Movie not found" };
-        return await _foundMovie.remove();
-    } catch (e) {
-      console.error(e);
-    }
-}
+};
+
+//READ SERVICE
+export const readMovie = async (id?: number) => {
+  try {
+    if(id){return await moviesRepo.findOne({where: {id: id}})}
+    else{return await moviesRepo.find();}
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error al obtener usuarios de la base de datos');
+  }
+};
+
+// UPDATE SERVICE
+export const updateMovie = async (id: number, movie: IMovies) => {
+  try {
+    const foundMovie = await Movies.findOne({ where: {id: id} });
+    if (!foundMovie) return { message: 'Movie not found!' };
+
+    foundMovie.name = movie.name;
+    foundMovie.description = movie.description;
+    foundMovie.price = movie.price;
+    foundMovie.category = movie.category;
+    foundMovie.studio = movie.studio;
+    foundMovie.stock = movie.stock;
+    foundMovie.measure = movie.measure;
+    foundMovie.creation_date = movie.creation_date;
+    foundMovie.duration = movie.duration;
+    foundMovie.release_date = movie.release_date;
+    foundMovie.active = movie.active;
+    
+    return await foundMovie.save();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+// DELETE SERVICE
+export const deleteMovie = async (movieId: number) => {
+  try {
+    const foundMovie = await Movies.findOne({ where: { id: movieId } });
+    if (!foundMovie) return { message: 'Movie not found' };
+    foundMovie.active = 0
+    return await foundMovie.save();
+  } catch (e) {
+    console.error(e);
+  }
+};

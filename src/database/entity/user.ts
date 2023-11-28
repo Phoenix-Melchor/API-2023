@@ -5,24 +5,24 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: false })
+  @Column({ unique: true })
   name: string;
   @Column({ unique: true })
   email: string;
   @Column({ unique: false })
   password: string;
   @Column({ unique: false })
-  creation_date: Date;
+  creation_date: string;
   @Column({ unique: false })
-  update_date: Date;
+  update_date: string;
   @Column({ unique: false })
   update_User: number
   @Column({ unique: false })
-  last_seen: Date;
+  last_seen: string;
   @Column({ unique: false })
   gender: string;
   @Column({ unique: false })
-  active: boolean;
+  active: number;
 
   /*@ManyToOne(() => User, user => user.updatedByid)
   @JoinColumn({ name: 'update_user', referencedColumnName: 'name' })
