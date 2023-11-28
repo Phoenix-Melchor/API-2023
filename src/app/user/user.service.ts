@@ -4,31 +4,22 @@ import { AppDataSource } from 'src/database/db';
 const userRepo = AppDataSource.getRepository(User)
 
 
-
-
 export interface IUser {
   name: string;
   email: string;
   password: string;
-  creation_date: Date;
-  update_date: Date;
-  last_seen: Date; 
+  creation_date: string;
+  update_date: string;
+  update_User: number;
+  last_seen: string; 
   gender: string;
-  active: boolean;
+  active: number;
   updatedByid: User;
 }
 
-export const readUsers = async () => {
-  try {
-    return await userRepo.find();
-  } catch (error) {
-    console.error(error);
-    throw new Error('Error al obtener usuarios de la base de datos');
-  }
-};
 
 // CREATE SERVICE
-export const createUser = async (user: IUser/*, createdByUserId: number*/) => {
+export const createuser = async (user: IUser, createdByUserId: number) => {
   try {
     const newUser = new User();
     newUser.name = user.name;
@@ -36,6 +27,7 @@ export const createUser = async (user: IUser/*, createdByUserId: number*/) => {
     newUser.password = user.password;
     newUser.creation_date = user.creation_date;
     newUser.update_date = user.update_date;
+    newUser.update_User = createdByUserId;
     newUser.last_seen = user.last_seen;
     newUser.gender = user.gender;
     newUser.active = user.active;
@@ -46,26 +38,21 @@ export const createUser = async (user: IUser/*, createdByUserId: number*/) => {
   }
 };
 
-// READ SERVICE
-export const readUser = async (userId?: number) => {
+//READ SERVICE
+export const readUsers = async (id?: number) => {
   try {
-    if (userId) {
-      return await User.findOne({
-        where: { id: userId },
-        relations: ['updatedByid'],
-      });
-    } else {
-      return await User.find({ relations: ['updatedByid'] });
-    }
-  } catch (e) {
-    console.error(e);
+    if(id){return await userRepo.findOne({where: {id: id}})}
+    else{return await userRepo.find();}
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error al obtener usuarios de la base de datos');
   }
 };
 
 // UPDATE SERVICE
-export const updateUser = async (user: { id: number } & IUser) => {
+export const updateUser = async (id: number, user: IUser) => {
   try {
-    const foundUser = await User.findOne({ where: { id: user.id } });
+    const foundUser = await User.findOne({ where: {id: id} });
     if (!foundUser) return { message: 'User not found!' };
 
     foundUser.name = user.name;
@@ -76,7 +63,7 @@ export const updateUser = async (user: { id: number } & IUser) => {
     foundUser.last_seen = user.last_seen;
     foundUser.gender = user.gender;
     foundUser.active = user.active;
-
+    
     return await foundUser.save();
   } catch (e) {
     console.error(e);
@@ -88,8 +75,8 @@ export const deleteUser = async (userId: number) => {
   try {
     const foundUser = await User.findOne({ where: { id: userId } });
     if (!foundUser) return { message: 'User not found' };
-
-    return await foundUser.remove();
+    foundUser.active = 0
+    return await foundUser.save();
   } catch (e) {
     console.error(e);
   }

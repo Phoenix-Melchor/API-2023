@@ -1,4 +1,5 @@
 import { Movies } from "@entity/movies";
+import { Purchase } from "@entity/purchase";
 import { Role } from "@entity/role";
 import { Sale } from "@entity/sale";
 import { User } from "@entity/user";
@@ -10,9 +11,9 @@ export const AppDataSource = new DataSource({
     host: "localhost",
     username: "root",
     password: "Phoenix-Melchor14",
-    database: "jadfaa",
+    database: "apidb",
     port: 3306,
-    entities:[Movies, Role, User, Sale],
+    entities:[Movies, Role, User, Sale,Purchase],
     logging: true,
     synchronize: false
 })

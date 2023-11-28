@@ -1,33 +1,24 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn } from "typeorm";
-import { Movies } from './movies';
 
 @Entity({ name: 'Sale' })
 export class Sale extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
+    name: string;
+    @Column({ unique: true })
+    description: string;
+    @Column({unique: false})
     price: string;
-    @Column()
+    @Column({unique: false})
     sale_start: string;
-    @Column()
+    @Column({unique: false})
     sale_end: string;
-    @Column()
-    active: boolean;
-
-    @ManyToOne(() => Movies, { eager: true })
-    @JoinColumn({ name: 'name' })
-    movie: Movies;
-
-    @ManyToOne(() => Movies, { eager: true })
-    @JoinColumn({ name: 'description' })
-    movieDescription: Movies;
-
-    @ManyToOne(() => Movies, { eager: true })
-    @JoinColumn({ name: 'duration' })
-    movieDuration: Movies;
-
-    @ManyToOne(() => Movies, { eager: true })
-    @JoinColumn({ name: 'released_date' })
-    movieReleasedDate: Movies;
+    @Column({ unique: false })
+    duration: string;
+    @Column({ unique: false })
+    release_date: string;
+    @Column({unique: false})
+    active: number;
 }
