@@ -20,7 +20,7 @@ router.get('/:id?', async (_req, res) => {
 router.post('/post', async (_req, res) => {
   try{
     const data = _req.body
-    const user = await createuser(data ,1);
+    const user = await createuser(data);
     res.json(user)
   }
   catch(error){

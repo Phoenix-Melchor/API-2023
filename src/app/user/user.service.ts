@@ -10,7 +10,7 @@ export interface IUser {
   password: string;
   creation_date: string;
   update_date: string;
-  update_User: number;
+  update_User: string;
   last_seen: string; 
   gender: string;
   active: number;
@@ -19,7 +19,7 @@ export interface IUser {
 
 
 // CREATE SERVICE
-export const createuser = async (user: IUser, createdByUserId: number) => {
+export const createuser = async (user: IUser) => {
   try {
     const newUser = new User();
     newUser.name = user.name;
@@ -27,7 +27,7 @@ export const createuser = async (user: IUser, createdByUserId: number) => {
     newUser.password = user.password;
     newUser.creation_date = user.creation_date;
     newUser.update_date = user.update_date;
-    newUser.update_User = createdByUserId;
+    newUser.update_User = user.update_User;
     newUser.last_seen = user.last_seen;
     newUser.gender = user.gender;
     newUser.active = user.active;

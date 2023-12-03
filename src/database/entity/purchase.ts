@@ -6,21 +6,23 @@ export class Purchase extends BaseEntity {
   id: number;
 
   @Column({ unique: true })
-  name: string;
+  description: string;
   @Column({ unique: true })
-  email: string;
+  client_name: string;
   @Column({ unique: false })
-  password: string;
+  total: string;
+  @Column({ unique: false })
+  total_products: string;
   @Column({ unique: false })
   creation_date: string;
   @Column({ unique: false })
+  creation_user: number
+  @Column({ unique: false })
   update_date: string;
   @Column({ unique: false })
-  update_User: number
-  @Column({ unique: false })
-  last_seen: string;
-  @Column({ unique: false })
-  gender: string;
+  update_user: string;
   @Column({ unique: false })
   active: number;
+  @Column({unique: false})
+  purchase_details: number;
 }

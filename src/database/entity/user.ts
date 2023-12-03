@@ -16,7 +16,7 @@ export class User extends BaseEntity {
   @Column({ unique: false })
   update_date: string;
   @Column({ unique: false })
-  update_User: number
+  update_User: string
   @Column({ unique: false })
   last_seen: string;
   @Column({ unique: false })
