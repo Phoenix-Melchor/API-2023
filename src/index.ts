@@ -8,6 +8,8 @@ import { AppDataSource } from "./database/db";
 import userRouter from './app/user/user.router'
 import moviesRouter from './app/movies/movies.router'
 import saleRouter from './app/sales/sale.router'
+import purchaseRouter from './app/purchase/purchase.router'
+import purchasedetRouter from './app/purchase-details/purchasedetails.router'
 
 const app = express()
 app.use(express.json())
@@ -24,7 +26,8 @@ app.listen(port, () => {
 app.use('/api/user', userRouter)
 app.use('/api/movies', moviesRouter)
 app.use('/api/sale', saleRouter)
-
+app.use('/api/purchase', purchaseRouter)
+app.use('/api/purchasedet', purchasedetRouter)
 
 //Arreglar base de datos connection
 async function StartDatabase() {
