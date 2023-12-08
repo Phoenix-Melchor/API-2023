@@ -1,5 +1,6 @@
 import { User } from '@entity/user';
 import { AppDataSource } from 'src/database/db';
+import jwt from 'jsonwebtoken'
 
 const userRepo = AppDataSource.getRepository(User)
 
@@ -17,6 +18,15 @@ export interface IUser {
   updatedByid: User;
 }
 
+//Autenticacion de token
+export const verifyToken = (token: string, secretkey: string) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secretkey, (err,decode) =>{
+      if(err) reject(err);
+      resolve(decode)
+    })
+  })  
+}
 
 // CREATE SERVICE
 export const createuser = async (user: IUser) => {

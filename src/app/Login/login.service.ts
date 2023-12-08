@@ -13,19 +13,20 @@ export interface ILogin {
 // CREATE SERVICE
 export const login = async (data: ILogin) => {
   try {
-    //Header
-    await userRepo.findOne({where: {name: data.username}})
-    .then(foundUser => {
-      if(foundUser){
-        foundUser.password
-      }
-    })
+    const username = await userRepo.findOne({where: {name: data.username}})
+    if (!username) {
+      throw new Error('Nombre de usuario o contraseña incorrectos');
+    }
+
+    const ValidPassword = username.password == data.password
+    if(!ValidPassword){throw new Error('Nombre de usuario o contraseña incorrectos')}
     
-    //Payload
+    const token = jwt.sign({userId: username.id, username: username.name}, '83046127603128', {expiresIn: '1h'})
 
-    //Verify Signature
+    return {token}
 
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Error al Iniciar Sesion:')
+    console.error(error);
   }
 };

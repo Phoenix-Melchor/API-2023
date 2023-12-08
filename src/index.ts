@@ -10,6 +10,7 @@ import moviesRouter from './app/movies/movies.router'
 import saleRouter from './app/sales/sale.router'
 import purchaseRouter from './app/purchase/purchase.router'
 import purchasedetRouter from './app/purchase-details/purchasedetails.router'
+import loginRouter from './app/Login/login.router'
 
 const app = express()
 app.use(express.json())
@@ -28,6 +29,7 @@ app.use('/api/movies', moviesRouter)
 app.use('/api/sale', saleRouter)
 app.use('/api/purchase', purchaseRouter)
 app.use('/api/purchasedet', purchasedetRouter)
+app.use('/api', loginRouter)
 
 //Arreglar base de datos connection
 async function StartDatabase() {
