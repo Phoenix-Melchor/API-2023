@@ -1,8 +1,23 @@
 import { Body, Controller, Delete, Get, Path, Post, Put, Query, Route, Tags } from 'tsoa';
-import { createuser, deleteUser, readUsers, updateUser } from './user.service';
+import { createuser, deleteUser, readUsers, updateUser, verifyToken } from './user.service';
 import express from 'express'
 
 const router = express.Router()
+
+router.use(async (req,res, next) => {
+  const token = req.header('valid-token');
+
+  if(!token){
+    return res.status(401).send('Acceso denegado. Token no proporcionado')
+  }
+
+  try{
+    await verifyToken(token.replace('Bearer ', ''), '83046127603128')
+    next()
+  } catch (error) {
+    return res.status(403).send('Token Invalido')
+  }
+})
 
 router.get('/:id?', async (_req, res) => {
   try {
